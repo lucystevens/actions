@@ -20,13 +20,13 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
 
     - name: Build with Maven
-      uses: lukecmstevens/actions/maven-task@main
+      uses: lukecmstevens/actions/maven-task@v1
       with:
         task: package
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Publish to GitHub Packages Apache Maven
-      uses: lukecmstevens/actions/maven-task@main
+      uses: lukecmstevens/actions/maven-task@v1
       with:
         task: deploy
         token: ${{ secrets.GH_ACCESS_TOKEN }}

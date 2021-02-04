@@ -24,18 +24,18 @@ jobs:
     # Finalise the version by removing the -beta or -SNAPSHOT suffix if it exists
 
     - name: Finalise version
-      uses: lukecmstevens/actions/finalise-version@main
+      uses: lukecmstevens/actions/finalise-version@v1
 
     # Build and deploy maven package (including running tests)
 
     - name: Build with Maven
-      uses: lukecmstevens/actions/maven-task@main
+      uses: lukecmstevens/actions/maven-task@v1
       with:
         task: package
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Publish to GitHub Packages Apache Maven
-      uses: lukecmstevens/actions/maven-task@main
+      uses: lukecmstevens/actions/maven-task@v1
       with:
         task: deploy
         token: ${{ secrets.GH_ACCESS_TOKEN }}
@@ -43,7 +43,7 @@ jobs:
     # Get maven properties and store in environment
 
     - name: Get maven properties
-      uses: lukecmstevens/actions/get-mvn-properties@main
+      uses: lukecmstevens/actions/get-mvn-properties@v1
 
     # We finalised the version earlier, now committing, tagging, and pushing to main
 
@@ -85,7 +85,7 @@ jobs:
         ref: develop
 
     - name: Bump version
-      uses: lukecmstevens/actions/bump-version@main
+      uses: lukecmstevens/actions/bump-version@v1
       with:
        version-suffix: SNAPSHOT
 

@@ -23,7 +23,7 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
 
     - name: Run maven tests
-      uses: lukecmstevens/actions/maven-task@main
+      uses: lukecmstevens/actions/maven-task@v1
       with:
         task: test
         token: ${{ secrets.GITHUB_TOKEN }}
