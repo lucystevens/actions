@@ -1,5 +1,5 @@
 # This workflow does all the tagging, building, publishing etc. around a new release
-name: Release
+name: Release Main
 
 on:
   push:
