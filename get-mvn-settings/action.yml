@@ -1,0 +1,10 @@
+runs:
+  using: "composite"
+  steps:
+    - name: Create .m2 directory
+      run: mkdir .m2
+      shell: bash
+
+    - name: Copy .m2 settings
+      run: cp ${{ github.action_path }}/../.m2/settings.xml ${{ github.workspace }}/.m2/settings.xml
+      shell: bash

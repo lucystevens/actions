@@ -2,5 +2,5 @@ runs:
   using: "composite"
   steps:
     - name: Finalise version
-      run: ${{ github.action_path }}/scripts/finalise-version.sh
+      run: ${{ github.action_path }}/finalise-version.sh
       shell: bash
