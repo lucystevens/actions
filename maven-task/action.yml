@@ -11,7 +11,7 @@ runs:
     - name: Run maven task
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
-      run: mvn -B ${{ inputs.task }} -s ${{ github.action_path }}/.m2/settings.xml
+      run: mvn -B ${{ inputs.task }} -s ${{ github.action_path }}/../.m2/settings.xml
       shell: bash
 
     
