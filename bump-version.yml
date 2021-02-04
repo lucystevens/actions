@@ -1,0 +1,10 @@
+inputs:
+  version-suffix:
+    description: 'The suffix for the next version'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Bump version
+      run: ${{ github.action_path }}/scripts/bump-version.sh ${{ inputs.version-suffix }}
+      shell: bash

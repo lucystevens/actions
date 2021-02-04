@@ -1,0 +1,16 @@
+inputs:
+  task:
+    description: 'The maven task to run'
+    required: true
+  token:
+    description: 'The github access token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Run maven task
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: mvn -B ${{ inputs.task }} -s ${{ github.action_path }}/.m2/settings.xml
+
+    
