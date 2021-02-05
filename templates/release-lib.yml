@@ -1,5 +1,5 @@
 # This workflow does all the tagging, building, publishing etc. around a new release
-name: Release Main
+name: release
 
 on:
   push:
@@ -44,6 +44,11 @@ jobs:
 
     - name: Get maven properties
       uses: lukecmstevens/actions/get-mvn-properties@v1
+
+    - name: Update README
+      uses: lukecmstevens/actions/set-readme-version@main
+      with:
+       version: ${{ env.MVN_VERSION }}
 
     # We finalised the version earlier, now committing, tagging, and pushing to main
 

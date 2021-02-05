@@ -1,6 +1,6 @@
 # Run tests on pushes to develop
 
-name: Test Develop
+name: test
 
 on:
   push:

@@ -1,5 +1,5 @@
 # This workflow runs tests and builds a snapshot package
-name: Publish Develop
+name: publish
 
 on:
   push:
