@@ -6,5 +6,5 @@ runs:
   using: "composite"
   steps:
     - name: Set README version
-      run: sed -i -E "s/<version>[0-9.]+<\/version>/<version>{{ inputs.version }}<\/version>/g" "README.md"
+      run: sed -i -E "s/<version>[0-9.]+<\/version>/<version>${{ inputs.version }}<\/version>/g" "README.md"
       shell: bash
