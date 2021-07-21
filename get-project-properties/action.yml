@@ -1,0 +1,6 @@
+runs:
+  using: "composite"
+  steps:
+    - name: Finalise version
+      run: ${{ github.action_path }}/get-project-properties.sh
+      shell: bash
