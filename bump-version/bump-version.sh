@@ -1,3 +1,6 @@
+#!/bin/bash
+SUFFIX="$1"
+
 detectBuildTool(){
     build_tool="unknown"
 	if [ -f "build.gradle" ]; then
@@ -10,51 +13,69 @@ detectBuildTool(){
 }
 
 getNextVersion(){
+    local currentVersion="$1"
+    if [ -z "$currentVersion" ]; then
+        echo "Current version not set!"
+        return 1
+    fi
+    echo "Version: $currentVersion"
+
     # Split out major version (X[.x.x])
-    majorpart="${version%%.*}"
+    local majorpart="${currentVersion%%.*}"
 
     # Remove patch version and store temporary (X.x[.x])
-    tmppart="${version%.*}"
+    local tmppart="${currentVersion%.*}"
 
     # Split out minor version ([X.]x[.x])
-    minorpart="${tmppart##*.}"
+    local minorpart="${tmppart##*.}"
 
     # Split out patch version ([X.x.]x)
-    patchpart="${version##*.}"
+    local patchpart="${currentVersion##*.}"
 
     # Create optional suffix
-    suffix="$1"
-    if [[ "$suffix" != "" ]]; then
-        suffix="-$suffix"
+    if [[ "$SUFFIX" != "" ]]; then
+        SUFFIX="-$SUFFIX"
     fi
 
     # Create next version by bumping minor version and zero-ing patch
-    nextVersion="$majorpart.$((minorpart+1)).0$suffix"
+    nextVersion="$majorpart.$((minorpart+1)).0$SUFFIX"
 }
 
 maven(){
     # Get version from pom
-    version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-    getNextVersion
+    local version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+    getNextVersion $version
 
     # Update version in pom
-    mvn versions:set -DnewVersion=$nextVersion -q
+    mvn versions:set -DnewVersion="$nextVersion" -q
 }
 
 node(){
     # Get version from node
-    version=$(node -e "console.log(require('./package.json').version);")
-    getNextVersion
+    local version=$(cat package.json | jq -r '.version')
+    getNextVersion $version
 
     # Update version in package.json
-    npm version $nextVersion
+    silent=$(npm version $nextVersion)
+}
+
+gradle(){
+    # Get version from pom
+    # TODO getting version doesn't work here
+    local version=$(gradle getVersion -q)
+    getNextVersion $version
+
+    # Update version in pom
+    echo "version=$nextVersion" >> gradle.properties
 }
 
 detectBuildTool
-if [[ "$1" == "maven" ]]; then
+if [ "$build_tool" == "maven" ]; then
 	maven
-elif [[ "$1" == "node" ]]; then
+elif [ "$build_tool" == "node" ]; then
 	node
+elif [ "$build_tool" == "gradle" ]; then
+	gradle
 else
 	echo "No valid build tool detected. Options are maven or node"
 fi

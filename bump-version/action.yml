@@ -7,5 +7,5 @@ runs:
   using: "composite"
   steps:
     - name: Bump version
-      run: ${{ github.action_path }}/bump-version.sh ${{ inputs.build-tool }} ${{ inputs.version-suffix }}
+      run: ${{ github.action_path }}/bump-version.sh ${{ inputs.version-suffix }}
       shell: bash

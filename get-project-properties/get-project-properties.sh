@@ -12,31 +12,31 @@ detectBuildTool(){
 maven() {
     # Get version
     VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
-    echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
+    echo "PROJECT_VERSION=$VERSION" >> "$GITHUB_ENV"
 
     # Get name/artifact
     ARTIFACT=$( mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout )
-    echo "PROJECT_NAME=$ARTIFACT" >> $GITHUB_ENV
+    echo "PROJECT_NAME=$ARTIFACT" >> "$GITHUB_ENV"
 
     # Get group
     GROUP=$( mvn help:evaluate -Dexpression=project.groupId -q -DforceStdout )
-    echo "PROJECT_GROUP=$GROUP" >> $GITHUB_ENV
+    echo "PROJECT_GROUP=$GROUP" >> "$GITHUB_ENV"
 }
 
 node() {
     # Get version
     VERSION=$(node -e "console.log(require('./package.json').version);")
-    echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
+    echo "PROJECT_VERSION=$VERSION" >> "$GITHUB_ENV"
 
     # Get name
     NAME=$(node -e "console.log(require('./package.json').name);")
-    echo "PROJECT_NAME=$NAME" >> $GITHUB_ENV
+    echo "PROJECT_NAME=$NAME" >> "$GITHUB_ENV"
 }
 
 detectBuildTool
-if [[ "$1" == "maven" ]]; then
+if [[ "$build_tool" == "maven" ]]; then
 	maven
-elif [[ "$1" == "node" ]]; then
+elif [[ "$build_tool" == "node" ]]; then
 	node
 else
 	echo "No valid build tool detected. Options are maven or node"

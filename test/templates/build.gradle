@@ -1,0 +1,16 @@
+apply plugin: 'java'
+sourceCompatibility = 1.8
+
+group = 'uk.co.lukestevens'
+
+repositories {
+    mavenCentral()
+}
+
+task getName() {
+    doLast { println project.name }
+}
+
+task getVersion() {
+    doLast { println project.version }
+}
